@@ -15,6 +15,10 @@ export default class Trails extends THREE.Mesh {
       vertexShader: trailsVs,
       fragmentShader: trailsFs,
       transparent: true,
+      // blending: THREE.CustomBlending,
+      // blendEquation: THREE.AddEquation,
+      // blendSrc: THREE.SrcColorFactor,
+      // blendDst: THREE.OneMinusSrcColorFactor,
       uniforms: {
         texturePosition: {
           value: new THREE.Texture(),
@@ -36,6 +40,10 @@ export default class Trails extends THREE.Mesh {
     //   color: '#ff0000'
     // });
     super(geometry, material);
+
+    this.length = length;
+    this.num = num;
+    this.time = 0;
     // this.material.needsUpdate = true
     this.matrixAutoUpdate = false;
     this.updateMatrix();
@@ -70,10 +78,6 @@ export default class Trails extends THREE.Mesh {
 
     this.computeRenderer.init();
 
-    this.length = length;
-    this.num = num;
-    this.time = 0;
-
     this.gui = options?.gui;
     this.setupSettings();
   }
@@ -84,7 +88,11 @@ export default class Trails extends THREE.Mesh {
    */
   initPosition(tex) {
     const textureArray = tex.image.data;
-    const range = new THREE.Vector3(10, 10, 10);
+    const range = new THREE.Vector3(
+      Math.random()*3,
+      Math.random()*3,
+      Math.random()*3
+    );
 
     for(let i = 0; i < textureArray.length; i += this.length * 4) {
       const x = Math.random() * range.x - range.x/2;
@@ -92,10 +100,10 @@ export default class Trails extends THREE.Mesh {
       const z = Math.random() * range.z - range.z/2;
 
       for(let j = 0; j < this.length * 4; j += 4){
-        texArray[i + j + 0] = x;
-        texArray[i + j + 1] = y;
-        texArray[i + j + 2] = z;
-        texArray[i + j + 3] = 0.0;
+        textureArray[i + j + 0] = x;
+        textureArray[i + j + 1] = y;
+        textureArray[i + j + 2] = z;
+        textureArray[i + j + 3] = 0.0;
       }
     }
   }

@@ -5,7 +5,7 @@ export default class Camera extends THREE.PerspectiveCamera {
   constructor(options = {}) {
     super(options?.fov, options?.aspect, options?.near, options?.far);
     this.time = 0;
-    this.enableControl = true;
+    this.enableControl = options?.enableControl;
 
     if (!options?.canvas) return;
     if (!this.enableControl) return;
@@ -28,6 +28,7 @@ export default class Camera extends THREE.PerspectiveCamera {
     const r = 14;
     this.time += deltaTime;
     this.position.set( Math.sin( this.time * 0.5 ) * r, 0, Math.cos( this.time * 0.5 ) * r );
+    this.lookAt(0, 0, 0);
     if (!this.controls) return;
     this.controls.update();
   }

@@ -17,7 +17,7 @@ export default class WebGLContent {
     this.renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: true
+      antialias: true,
     });
     this.scene = new THREE.Scene();
     this.camera = new Camera({
@@ -25,8 +25,9 @@ export default class WebGLContent {
       aspect: this.resolution.x / this.resolution.y,
       far: 1000,
       canvas,
-      enableDamping: true,
-      dampingFactor: 0.05
+      enableControl: false
+      // enableDamping: true,
+      // dampingFactor: 0.05
     });
     this.clock = new THREE.Clock(true);
     this.trails = null;
@@ -49,8 +50,8 @@ export default class WebGLContent {
     // const max = 2000 * 30;
     // const num = Math.floor(Math.random() * 4000);
     // const length = Math.floor(max/num);
-    const num = 1000;
-    const length = 60;
+    const num = 4096/4;
+    const length = 32 ;
     console.log(`trails => num: ${num}, length: ${length}`);
     this.trails = new Trails(this.renderer, num, length, {
       gui: this.gui

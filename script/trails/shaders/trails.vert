@@ -13,8 +13,8 @@ vec3 hsv2rgb(vec3 c) {
 void main() {
     vec3 pos = texture2D( texturePosition, uv ).xyz;
 
-    vec3 hsvColor = hsv2rgb(vec3(colors.x + uv.y / (colors.y * 3. + 1. ), 1.,  1. ));
-    vColor = vec4(hsvColor , uv.x);
+    vec3 hsvColor = hsv2rgb(vec3(colors.x + uv.y / 5., 1.,  1. ));
+    vColor = vec4(hsvColor , 1.);
 
     vec4 mvPosition = modelViewMatrix * vec4( pos + position, 1.0 );
     gl_Position = projectionMatrix * mvPosition;
